@@ -1,22 +1,29 @@
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
 .App {
-  height: 100vh;
+  text-align: center;
 }
 
-#CarList {
-    height: 100vh;
-    border-right: solid 1px #DDDDDD;
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
 }
 
-#CarEdit {
-  height: 100vh;
+.App-header {
+  background-color: #222;
+  height: 100px;
+  padding: 20px;
+  color: white;
 }
 
-.clearfix {
-  clear: both;
-  margin-bottom: 15px;
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+img.navbar-brand {
+  padding: 0px;
+
 }

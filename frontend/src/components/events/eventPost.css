@@ -1,0 +1,13 @@
+div#Post.col-md-10 {
+  padding: 35px;
+  display: block;
+}
+
+div.form-group {
+  margin: 0px;
+}
+
+input#formControlsFile {
+  padding:10px;
+  display: inline;
+}

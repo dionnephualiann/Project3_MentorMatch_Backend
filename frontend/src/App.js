@@ -1,66 +1,50 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import CarList from './components/CarList/CarList';
-import Create from './components/Create/Create';
-import Login from './components/Login/Login';
-
+import logo from './logo.svg';
 import './App.css';
+import initStore from './Store';
+import { Provider } from 'react-redux';
+import {HashRouter, Link} from 'react-router-dom';
+
+import { Button, Navbar, NavItem, Nav, Grid } from 'react-bootstrap';
+import Main from './Routes';
+
+import navbarInstance from './components/navBar/navBar';
 
 class App extends Component {
-  constructor(props){
-    super(props);
-
-    this.state = {
-      activeCar: ""
-    }
-  }
-
-
-  setActiveCar = (id) => {
-
-    console.log("Active car: ", id);
-
-    this.setState({
-      activeCar: id
-    })
-  }
-
   render() {
-    const isLoggedIn = this.props.user._id;
-
     return (
-      <div className="App container-fluid">
-        <div className="row">
-          {isLoggedIn ? (
-            <div className="isLoggedIn">
-              <div className="col-md-2" id="CarList">
-                <CarList setActiveCar={ this.setActiveCar } activeCar= {this.state.activeCar}/>
-              </div>
-              <div className="col-md-10" id="CarEdit">
-                <Create car={this.state.activeCar}/>
-              </div>
-            </div>
-          ) : (
-            <div className="col-md-4 col-md-offset-4" id="Login">
-              <Login/>
-            </div>
-          )}
+      <Provider store={initStore()}>
+      <div className="App">
+        <div className="App-header">
+
+          <Navbar inverse collapseOnSelect>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <img src="../images/logo3.png"/>
+              </Navbar.Brand>
+              <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav pullRight>
+                <NavItem eventKey={1}><Link to='/events'>Events</Link></NavItem>
+                <NavItem eventKey={2}><Link to='/profile'>Profile</Link></NavItem>
+                <NavItem eventKey={3} href="#">Mentor</NavItem>
+                <NavItem eventKey={4} href="#">Mentee</NavItem>
+                <NavItem eventKey={5} href="#">Logout</NavItem>
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
+
         </div>
+        <Grid>
+        <Main>
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </Main>
+        </Grid>
       </div>
+      </Provider>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        user: state.user
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

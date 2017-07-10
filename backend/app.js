@@ -30,7 +30,7 @@ import auth from './routes/auth';
 import eventsPage from './routes/events';
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/cardb');
+mongoose.connect('mongodb://localhost:27017/MentorMatch');
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
