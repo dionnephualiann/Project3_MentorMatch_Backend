@@ -1,0 +1,22 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  height: 100vh;
+}
+
+#CarList {
+    height: 100vh;
+    border-right: solid 1px #DDDDDD;
+}
+
+#CarEdit {
+  height: 100vh;
+}
+
+.clearfix {
+  clear: both;
+  margin-bottom: 15px;
+}
