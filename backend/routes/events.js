@@ -33,12 +33,13 @@ router.post('/', (req,res,next) => {
 
 /*Read event*/
 
-router.get('/:id', (req,res,next) =>{
+router.get('/:id', (req,res,next) => {
+
   const id = req.param.id;
-  Event.findById(id, (err,event)) =>{
+  Event.findById(id, (err, event) => {
     if (err) return res.status(404).send('Not found');
     res.json(event);
   });
 });
 
-Export default router;
+export default router;
