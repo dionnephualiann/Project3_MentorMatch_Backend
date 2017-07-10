@@ -1,11 +1,10 @@
 import Mongoose from 'mongoose'
 
 const eventsSchema = new Mongoose.Schema({
-  eventPostId: String,
-  referenceUserId: String,
-  DateTime: String,
-  imageUrl: String,
-  eventText: String
+  // postedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  date: Date,
+  // imageUrl: String,
+  text: String
 
 });
 

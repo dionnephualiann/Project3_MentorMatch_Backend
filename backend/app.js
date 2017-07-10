@@ -6,6 +6,7 @@ import express from 'express';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import passport from 'passport';
+import cors from 'cors';
 //import multer
 //import cloudinary
 
@@ -51,6 +52,7 @@ app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
@@ -82,9 +84,8 @@ app.use(function(req, res, next){
 });
 
 app.use('/', index);
-app.use('/api', carAPI);
 app.use('/auth', auth);
-app.use('./events', eventsPage )
+app.use('/api/events', eventsPage )
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
