@@ -14,10 +14,20 @@ import passport from 'passport';
 import path from 'path';
 import lessMiddleware from 'less-middleware';
 
+//import socket.io//
+// var io = require('socket.io')(server);
+// io.on('connection', function (socket) {
+//   socket.emit('news', { hello: 'world' });
+//   socket.on('my other event', function (data) {
+//     console.log(data);
+//   });
+// });
+
+//import routes for front end
 import index from './routes/index';
 import carAPI from './routes/car';
 import auth from './routes/auth';
-//import eventsPage from './routes/events';
+import eventsPage from './routes/events';
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/cardb');
@@ -74,7 +84,7 @@ app.use(function(req, res, next){
 app.use('/', index);
 app.use('/api', carAPI);
 app.use('/auth', auth);
-//app.use('./events', eventsPage )
+app.use('./events', eventsPage )
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

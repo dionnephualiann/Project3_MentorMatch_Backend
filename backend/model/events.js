@@ -1,13 +1,14 @@
-// import Mongoose from 'mongoose'
-//
-// const eventsSchema = new Mongoose.Schema({
-//   eventName: String,
-//   eventDesc: String,
-//   time: String,
-//   date: String
-//
-// });
-//
-// const events = Mongoose.model('events', eventsSchema);
-//
-// module.exports = events;
+import Mongoose from 'mongoose'
+
+const eventsSchema = new Mongoose.Schema({
+  eventPostId: String,
+  referenceUserId: String,
+  DateTime: String,
+  imageUrl: String,
+  eventText: String
+
+});
+
+const events = Mongoose.model('Event', eventsSchema);
+
+module.exports = Event;
