@@ -36,7 +36,7 @@ router.post('/', (req,res,next) => {
 
 router.get('/:id', (req,res,next) => {
 
-  const id = req.param.id;
+  const id = req.params.id;
   Event.findById(id, (err, event) => {
     if (err) return res.status(404).send('Not found');
     res.json(event);
