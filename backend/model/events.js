@@ -1,6 +1,6 @@
-import Mongoose from 'mongoose'
+import mongoose from 'mongoose'
 
-const eventsSchema = new Mongoose.Schema({
+const eventsSchema = new mongoose.Schema({
   // postedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   date: Date,
   // imageUrl: String,
@@ -8,6 +8,6 @@ const eventsSchema = new Mongoose.Schema({
 
 });
 
-const Event = Mongoose.model('Event', eventsSchema);
+const Event = mongoose.model('Event', eventsSchema);
 
 module.exports = Event;

@@ -26,9 +26,9 @@ import lessMiddleware from 'less-middleware';
 
 //import routes for front end
 import index from './routes/index';
-import carAPI from './routes/car';
 import auth from './routes/auth';
 import eventsPage from './routes/events';
+import profilePage from './routes/profile';
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/MentorMatch');
@@ -85,7 +85,8 @@ app.use(function(req, res, next){
 
 app.use('/', index);
 app.use('/auth', auth);
-app.use('/api/events', eventsPage )
+app.use('/api/events', eventsPage );
+app.use('/api/profile', profilePage);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
