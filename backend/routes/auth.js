@@ -4,64 +4,50 @@ import User from '../model/User';
 
 const router = express.Router();
 
-/* GET index page. */
-router.get('/user', (req, res, next) => {
-  res.json(req.user);
-});
 
-router.get('/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
-router.get('/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), (req, res) => {
-  res.redirect(req.session.returnTo || '/');
-});
-
-
+/**
+ * POST /login
+ * Sign in using email and password.
+ */
 router.post('/login', function(req, res, next) {
-    passport.authenticate('local', function(error, user, info) {
-        if(error) {
-            console.log(error);
-            return res.json({'error':'database','message': "Something went seriously wrong. Contact the dev team."});
-        }
+  req.assert('email', 'Email is not valid').isEmail();
+  req.assert('password', 'Password cannot be blank').notEmpty();
+  req.sanitize('email').normalizeEmail({ remove_dots: false });
+
+  const errors = req.validationErrors();
+
+  if (errors) {
+   req.flash('errors', errors);
+   return res.redirect('/login');
+ }
+
+    passport.authenticate('local', function(err, user, info) {
+        if (err) { return next(err); }
         if(!user) {
-          return res.json({'error':'user','message': "Wrong password or email"})
-        }
+            req.flash('errors', info);
+            return res.redirect('/login');
+          }
 
         req.logIn(user, function(err) {
-            if (err) {
-              console.log("Login err", "Wrong password");
-              return res.json({'error':'user','message': "Wrong password"})
-            }
-            return res.json(user);
-        });
+          if (err) { return next(err); }
+            req.flash('success', { msg: 'Success! You are logged in.' });
+            res.redirect('/');
+          });
     })(req, res, next);
 });
 
-// router.post('/login', function(req, res, next) {
-//
-//     console.log("Data: ",req.body.email, req.body.password)
-//
-//     console.log("passport.authenticate before",passport.authenticate);
-//     passport.authenticate('local', function(err, user, info) {
-//       console.log("passport.authenticate", err,user,info);
-//
-//         if (err) {
-//           console.log("Passport err", err);
-//           return res.json({'error':'database','message': "Something went seriously wrong. Contact the dev team."});
-//         }
-//         if (!user) {
-//           console.log("Could not find e-mail");
-//           return res.json({'error':'user','message': "Could not find e-mail"});
-//         }
-//         req.logIn(user, function(err) {
-//             if (err) {
-//               console.log("Login err", "Wrong password");
-//               return res.json({'error':'user','message': "Wrong password"})
-//             }
-//             return res.json({detail: info});
-//         });
-//     });
-// });
+/**
+ * GET /logout
+ * Log out.
+ */
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+})
 
-router.post('/signup', function(req, res, next) {
+
+export const postSignup = function(req, res, next) {
+  console.log(req.body);
     User.findOne({ email: req.body.email }, (err, existingUser) => {
 
       console.log("Data: ",req.body.email, req.body.password)
@@ -86,15 +72,12 @@ router.post('/signup', function(req, res, next) {
             return res.json({'error':'login','message': err});
         }
         console.log("User login success");
-        res.json({'redirect':'/'});
+        next();
         });
       });
     });
-});
+};
 
-router.get('/logout',(req, res, next) => {
-  req.logout();
-  res.redirect('/');
-});
+
 
 export default router;
