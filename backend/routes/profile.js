@@ -2,12 +2,14 @@ import express from 'express';
 import Profile from '../model/profile';
 
 const router = express.Router();
+import {postSignup} from './auth';
+import passportConfig from '../config/passport';
 
 /*
 *  Create Profile
 */
-router.post('/', (req,res,next) => {
-
+router.post('/', postSignup, (req,res,next) => {
+ console.log(req.body)
   const profile = new Profile();
   // profile.user =
   profile.url = null;
@@ -26,7 +28,7 @@ router.post('/', (req,res,next) => {
 /*
 *  Read Profile
 */
-router.get('/:id', (req,res,next) => {
+router.get('/:id', passportConfig.isAuthenticated, (req,res,next) => {
 
   const id = req.params.id;
   Profile.findById(id, (err, profile) => {
