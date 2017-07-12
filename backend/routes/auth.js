@@ -18,14 +18,16 @@ router.post('/login', function(req, res, next) {
 
   if (errors) {
   //  req.flash('errors', errors);
-   return res.json({redirect: '/login'});
+   return res.sendStatus(401);
+
  }
 
     passport.authenticate('local', function(err, user, info) {
         if (err) { return next(err); }
+        console.log(user);
         if(!user) {
             // req.flash('errors', info);
-            return res.json({redirect: '/login'});
+            return res.sendStatus(401);
           }
 
         req.logIn(user, function(err) {
