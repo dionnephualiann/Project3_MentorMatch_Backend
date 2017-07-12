@@ -7,6 +7,7 @@ import logger from 'morgan';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import cors from 'cors';
+import validator from 'express-validator';
 //import multer
 //import cloudinary
 
@@ -58,6 +59,8 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 
+app.use(validator());
+
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -106,6 +109,8 @@ app.use(function(req, res, next){
 
 app.use('/', index);
 app.use('/auth', auth);
+// isAuthenticated is passed through as the 2nd argument because user needs to sign in
+// in order to view the events page.
 app.use('/api/events', passportConfig.isAuthenticated, eventsPage,);
 app.use('/api/profile', profilePage);
 

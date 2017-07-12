@@ -10,28 +10,28 @@ const router = express.Router();
  * Sign in using email and password.
  */
 router.post('/login', function(req, res, next) {
+  console.log(req.assert);
   req.assert('email', 'Email is not valid').isEmail();
   req.assert('password', 'Password cannot be blank').notEmpty();
   req.sanitize('email').normalizeEmail({ remove_dots: false });
-
   const errors = req.validationErrors();
 
   if (errors) {
-   req.flash('errors', errors);
-   return res.redirect('/login');
+  //  req.flash('errors', errors);
+   return res.json({redirect: '/login'});
  }
 
     passport.authenticate('local', function(err, user, info) {
         if (err) { return next(err); }
         if(!user) {
-            req.flash('errors', info);
-            return res.redirect('/login');
+            // req.flash('errors', info);
+            return res.json({redirect: '/login'});
           }
 
         req.logIn(user, function(err) {
           if (err) { return next(err); }
-            req.flash('success', { msg: 'Success! You are logged in.' });
-            res.redirect('/');
+            // req.flash('success', { msg: 'Success! You are logged in.' });
+            return res.json({redirect: '/'});
           });
     })(req, res, next);
 });
@@ -42,7 +42,7 @@ router.post('/login', function(req, res, next) {
  */
 router.get('/logout', function(req, res) {
   req.logout();
-  res.redirect('/');
+  return res.json({redirect: '/login'});
 })
 
 

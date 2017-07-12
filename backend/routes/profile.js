@@ -17,7 +17,6 @@ router.post('/', postSignup, (req,res,next) => {
   profile.jobTitle = req.body.jobTitle || "unknown";
   profile.jobDescription = req.body.jobDescription || "unknown";
   profile.skillSet = req.body.skillSet || "unknown";
-  //add multer here//
   profile.save((err, profile) => {
        res.json(profile);
    });
