@@ -6,7 +6,6 @@ import express from 'express';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import passport from 'passport';
-import cors from 'cors';
 import validator from 'express-validator';
 //import multer
 //import cloudinary
@@ -53,7 +52,7 @@ app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
@@ -72,7 +71,7 @@ app.use(session({
   saveUninitialized: true,
   secret: "WDI Singapore",
   store: new MongoStore({
-    url: 'mongodb://localhost/cardb',
+    url: 'mongodb://localhost/MentorMatch',
     autoReconnect: true,
     clear_interval: 3600
   })
