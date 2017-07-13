@@ -13,7 +13,7 @@ router.post('/', postSignup, (req,res,next) => {
   const profile = new Profile();
   profile.user = req.user;
   profile.url = null;
-  profile.name = req.body.name || "unknown";
+
   profile.jobTitle = req.body.jobTitle || "unknown";
   profile.jobDescription = req.body.jobDescription || "unknown";
   profile.skillSet = req.body.skillSet || "unknown";
@@ -31,16 +31,15 @@ router.get('/:id', passportConfig.isAuthenticated, (req,res,next) => {
 
   const id = req.params.id;
   if(id === "me"){
-    Profile.findOne({user: req.user.id}, (err, profile) => {
-      console.log(id);
+
+    Profile.findOne({user: req.user.id}).populate("user", "name").exec(function(err, profile){
       if (err) return res.status(404).send('Not found');
       res.json(profile);
     })
   } else {
-  Profile.findById(id, (err, profile) => {
-    console.log(id);
-    if (err) return res.status(404).send('Not found');
-    res.json(profile);
+    Profile.findById(id).populate("user", "name").exec(function(err, profile){
+      if (err) return res.status(404).send('Not found');
+      res.json(profile)
 
     });
   }

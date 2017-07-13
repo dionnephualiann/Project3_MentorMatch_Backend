@@ -9,12 +9,10 @@ const router = express.Router();
 router.get('/', (req,res,next) =>{
   console.log("Request for Events page");
 
-  Event.find({}, (err, event) =>{
-    console.log(err);
-    if (err) return res.status(404).send('Not found');
+  Event.find().populate("postedBy", "name").exec(function (err, event) {
+    if(err) return res.status(404).send('Not found');
     res.json(event);
   });
-
 });
 
 /*Create Event*/
@@ -22,8 +20,8 @@ router.get('/', (req,res,next) =>{
 router.post('/', (req,res,next) => {
 
   const event = new Event();
-  // event.eventPostId = req.body.eventPostId || "Unknown";
-  // event.referenceUserId = req.body.referenceUserId || "Unknown";
+
+  event.postedBy = req.user || "Unknown";
   event.date = new Date() || "unknown";
   event.text = req.body.text || "Unknown";
   //add multer here//
