@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 const eventsSchema = new mongoose.Schema({
-  // postedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+  postedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   date: Date,
   // imageUrl: String,
   text: String

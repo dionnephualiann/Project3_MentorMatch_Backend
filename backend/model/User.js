@@ -4,10 +4,12 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
+  name: String,
   password: String,
   passwordResetToken: String,
   passwordResetExpires: Date,
   }, { timestamps: true });
+
 
 /**
  * Password hash middleware.

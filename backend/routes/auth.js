@@ -33,7 +33,7 @@ router.post('/login', function(req, res, next) {
         req.logIn(user, function(err) {
           if (err) { return next(err); }
             // req.flash('success', { msg: 'Success! You are logged in.' });
-            return res.json({redirect: '/'});
+            return res.json({});
           });
     })(req, res, next);
 });
@@ -61,6 +61,7 @@ export const postSignup = function(req, res, next) {
       console.log("New user");
 
       let user = new User();
+      user.name = req.body.name;
       user.email = req.body.email;
       user.password = req.body.password;
       user.save((err) => {
